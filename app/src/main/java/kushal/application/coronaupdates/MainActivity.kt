@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class MainActivity() : AppCompatActivity() {
 
     lateinit var que: RequestQueue
-    val url = "https://pomber.github.io/covid19/timeseries.json"
+    val url = "https://api.covid19india.org/data.json"
     lateinit var coroutineContext: CoroutineScope
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,13 +40,12 @@ class MainActivity() : AppCompatActivity() {
                 val builder = GsonBuilder()
                 val gson = builder.create()
 
-                val users = gson.fromJson(response, Utils::class.java)
-                val adapter = My_adapter(this@MainActivity, users)
+                val users = gson.fromJson(response, Example::class.java)
+                val list = users.statewise
 
-                val llm = LinearLayoutManager(this@MainActivity)
-                llm.stackFromEnd = true
-                llm.reverseLayout = true
-                recyclerView.layoutManager = llm
+                val adapter = My_adapter(this@MainActivity, list)
+
+                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
                 recyclerView.adapter = adapter
 
             },
