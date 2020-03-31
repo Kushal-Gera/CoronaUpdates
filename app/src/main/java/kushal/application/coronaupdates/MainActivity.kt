@@ -1,6 +1,8 @@
 package kushal.application.coronaupdates
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -44,6 +46,17 @@ class MainActivity() : AppCompatActivity() {
         val sh = getSharedPreferences("shared", Context.MODE_PRIVATE)
         if (sh.getBoolean("isFirst", true)) {
 
+            val d = AlertDialog.Builder(this, R.style.AlertDialogGreen)
+            d.setTitle("Want Global Charts ?")
+            d.setMessage("To see global charts\nSelect the icon from the menu box.\nVice-Versa for National Charts\n")
+            d.setCancelable(true)
+            d.setPositiveButton("Understood") { dialogInterface: DialogInterface, i: Int ->
+                sh.edit().putBoolean("isFirst", false).apply()
+            }
+            d.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            d.show()
         }
 
     }
