@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "575524833933",
+    "firebase_url": "https://newshunter-ca457.firebaseio.com",
+    "project_id": "newshunter-ca457",
+    "storage_bucket": "newshunter-ca457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575524833933:android:734c4cd87ee75c8e6e70c4",
+        "android_client_info": {
+          "package_name": "kushal.application.coronaupdates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6WRGvtRwEh5MpFnkoNSVXuP6DBwJK33M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575524833933:android:199152c992e6fa216e70c4",
+        "android_client_info": {
+          "package_name": "kushal.application.newshunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575524833933-ab1mcrsggbr2dbj07er3g1bvjqtkhkvi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kushal.application.newshunter",
+            "certificate_hash": "d7bad0872696ead1a652879eba613427340b8c57"
+          }
+        },
+        {
+          "client_id": "575524833933-9s72i0mhnqkbo4l992dvotfnvr1rodrf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kushal.application.newshunter",
+            "certificate_hash": "1ebd1b1ebc60dd0193d75ff904e92ee49592e2e5"
+          }
+        },
+        {
+          "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6WRGvtRwEh5MpFnkoNSVXuP6DBwJK33M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575524833933:android:20048c06d875f64b6e70c4",
+        "android_client_info": {
+          "package_name": "kushal.application.notification_newshunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575524833933-f8olgi5t65so7e9gcl27if3qg7bkilqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kushal.application.notification_newshunter",
+            "certificate_hash": "1ebd1b1ebc60dd0193d75ff904e92ee49592e2e5"
+          }
+        },
+        {
+          "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6WRGvtRwEh5MpFnkoNSVXuP6DBwJK33M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575524833933-o61k2tf2g7q54lu7n6ohe8flrspaaopr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
