@@ -4,16 +4,24 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -26,8 +34,12 @@ class MainActivity() : AppCompatActivity() {
     lateinit var que: RequestQueue
     val url = "https://api.covid19india.org/data.json"
     val urlInter = "https://api.covid19api.com/summary"
+    val INTERSTITIAL_ID = "ca-app-pub-5073642246912223/4646545920"
     lateinit var coroutineContext: CoroutineScope
     var is_domestic = true
+    val interstitialAd by lazy {
+        InterstitialAd(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +71,27 @@ class MainActivity() : AppCompatActivity() {
             d.show()
         }
 
+
+//      ad stuff here
+        interstitialAd.adUnitId = INTERSTITIAL_ID
+        interstitialAd.loadAd(AdRequest.Builder().build())
+        interstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                super.onAdClosed()
+                val h = Handler()
+                h.postDelayed({
+                    interstitialAd.loadAd(
+                        AdRequest.Builder().build()
+                    )
+                }, 60 * 1000.toLong())
+            }
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                interstitialAd.show()
+            }
+        }
+
     }
 
     private fun loadData(url: String) {
@@ -75,6 +108,7 @@ class MainActivity() : AppCompatActivity() {
 
                 val adapter = My_adapter(this@MainActivity, list)
 
+                recyclerView.visibility = RecyclerView.VISIBLE
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
                 recyclerView.adapter = adapter
                 progressBar.visibility = ProgressBar.GONE
@@ -109,9 +143,9 @@ class MainActivity() : AppCompatActivity() {
                 list.removeAt(0)
                 val adapter = My_adapter_Inter(this@MainActivity, list)
 
+                recyclerView.visibility = RecyclerView.VISIBLE
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
                 recyclerView.adapter = adapter
-//                adapter.notifyDataSetChanged()
                 progressBar.visibility = ProgressBar.GONE
             },
                 Response.ErrorListener {
@@ -139,16 +173,35 @@ class MainActivity() : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.switchTab) {
+
+            if (interstitialAd.isLoaded) {
+                interstitialAd.show()
+            } else {
+                interstitialAd.loadAd(AdRequest.Builder().build())
+                interstitialAd.adListener = object : AdListener() {
+                    override fun onAdClosed() {
+                        super.onAdClosed()
+                    }
+
+                    override fun onAdLoaded() {
+                        super.onAdLoaded()
+                        interstitialAd.show()
+                    }
+                }
+            }
+
+            recyclerView.visibility = RecyclerView.GONE
             progressBar.visibility = ProgressBar.VISIBLE
-            recyclerView.removeAllViews()
 
             if (!is_domestic) {
+                item.icon = ContextCompat.getDrawable(this, R.drawable.ic_business_black_24dp)
                 Toast.makeText(this, "National Selected", Toast.LENGTH_LONG).show()
-                tv.text = "Know About India's Count ?"
+                tv.text = "Know About India's Health ?"
                 loadData(url)
 
             } else {
-                tv.text = "International Count ?"
+                item.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp)
+                tv.text = "Global Health ?"
                 loadDataInter(urlInter)
                 Toast.makeText(this, "International Selected", Toast.LENGTH_LONG).show()
             }
@@ -157,6 +210,16 @@ class MainActivity() : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        if (!is_domestic) {
+
+            findViewById<TextView>(R.id.switchTab).performClick()
+            return
+        }
+
+        super.onBackPressed()
     }
 
 }

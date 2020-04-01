@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
             android:orientation="vertical">
@@ -52,8 +52,7 @@
                 android:maxLines="1"
                 android:text="India"
                 android:textColor="@color/black"
-                android:textSize="24sp"
-                />
+                android:textSize="23sp" />
 
             <TextView
                 android:id="@+id/date"
@@ -74,7 +73,6 @@
             android:layout_width="80dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:text="25000"
             android:textColor="#EF5350"
@@ -85,7 +83,7 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:contentDescription="@string/description"
             android:padding="5dp"
             android:src="@drawable/open" />

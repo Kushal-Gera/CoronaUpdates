@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:text="Know About India's Count ?"
+            android:text="Know About India's Health ?"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -109,7 +109,7 @@
 
             <TextView
                 android:id="@+id/totalInfected"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"

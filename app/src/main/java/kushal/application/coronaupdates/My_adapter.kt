@@ -5,10 +5,19 @@ import android.content.Context
 import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
     RecyclerView.Adapter<My_viewHolder>() {
+
+    val backG: ArrayList<Int> = arrayListOf(
+        R.drawable.bg1,
+        R.drawable.bg2,
+        R.drawable.bg3,
+        R.drawable.bg4,
+        R.drawable.bg5
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): My_viewHolder {
         val view = LayoutInflater.from(myContext).inflate(R.layout.list, parent, false)
@@ -16,6 +25,8 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
     }
 
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
+
+        holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
 
         holder.title.text = list[position].state.toString()
         holder.firstLetter.text = list[position].state.toCharArray()[0].toString()
@@ -40,10 +51,10 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
             d.show()
 
         }
+
+
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount(): Int = list.size
 
 }
