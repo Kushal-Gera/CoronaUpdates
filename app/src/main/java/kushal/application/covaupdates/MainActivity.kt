@@ -72,24 +72,24 @@ class MainActivity() : AppCompatActivity() {
 
 
 //      ad stuff here
-//        interstitialAd.adUnitId = INTERSTITIAL_ID
-//        interstitialAd.loadAd(AdRequest.Builder().build())
-//        interstitialAd.adListener = object : AdListener() {
-//            override fun onAdClosed() {
-//                super.onAdClosed()
-//                val h = Handler()
-//                h.postDelayed({
-//                    interstitialAd.loadAd(
-//                        AdRequest.Builder().build()
-//                    )
-//                }, 60 * 1000.toLong())
-//            }
-//
-//            override fun onAdLoaded() {
-//                super.onAdLoaded()
-//                interstitialAd.show()
-//            }
-//        }
+        interstitialAd.adUnitId = INTERSTITIAL_ID
+        interstitialAd.loadAd(AdRequest.Builder().build())
+        interstitialAd.adListener = object : AdListener() {
+            override fun onAdClosed() {
+                super.onAdClosed()
+                val h = Handler()
+                h.postDelayed({
+                    interstitialAd.loadAd(
+                        AdRequest.Builder().build()
+                    )
+                }, 60 * 1000.toLong())
+            }
+
+            override fun onAdLoaded() {
+                super.onAdLoaded()
+                interstitialAd.show()
+            }
+        }
 
     }
 

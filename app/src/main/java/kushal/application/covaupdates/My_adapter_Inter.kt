@@ -1,13 +1,16 @@
 package kushal.application.covaupdates
 
-import android.app.AlertDialog
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.dialog.*
 import kushal.application.covaupdates.International.Country
 import java.util.*
 
@@ -27,6 +30,7 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
         return My_viewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
@@ -39,24 +43,37 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
         holder.totalInfected.text = list[position].totalConfirmed.toString()
         holder.date.text = s.toString()
 
-        holder.itemView.setOnClickListener {
-            val text =
-                "Last Updated: ${s.toString()}\n" +
-                        "Active:             ${list[position].totalConfirmed - list[position].totalDeaths - list[position].totalRecovered}\n" +
-                        "Confirmed:      ${list[position].totalConfirmed.toString().trim()}\n" +
-                        "Deaths:            ${list[position].totalDeaths.toString().trim()}\n" +
-                        "Recovered:      ${list[position].totalRecovered.toString().trim()}"
 
-            val d = AlertDialog.Builder(myContext, R.style.AlertDialogGreen)
-            d.setTitle(list[position].country.toString())
-            d.setMessage(text)
-            d.setCancelable(false)
-            d.setPositiveButton("Return") { dialogInterface: DialogInterface, i: Int ->
-                dialogInterface.dismiss()
+        holder.itemView.setOnClickListener {
+            val d = Dialog(myContext)
+            val inc = list[position].newConfirmed.toString().trim()
+            val conf = list[position].totalConfirmed.toString().trim()
+            d.let {
+
+                it.setContentView(R.layout.dialog)
+                it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                it.show()
+
+                it.dia_place.text = list[position].country.toString().trim()
+                it.dia_update.text = s.toString()
+                it.dia_active.text =
+                    (list[position].totalConfirmed - list[position].totalDeaths - list[position].totalRecovered).toString()
+                it.dia_confirm.text = conf
+                it.dia_death.text = list[position].totalDeaths.toString()
+                it.dia_recovered.text = list[position].totalDeaths.toString()
+                it.dia_increase.text = "+$inc"
+
             }
-            d.show()
+
+            d.bar_before.post {
+                val h = d.bar_before.height
+                d.bar_before.animate()
+                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration =
+                    10
+            }
 
         }
+
     }
 
     override fun getItemCount(): Int {
