@@ -1,4 +1,4 @@
-package kushal.application.coronaupdates
+package kushal.application.covaupdates
 
 import org.junit.Test
 

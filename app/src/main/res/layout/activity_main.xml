@@ -116,7 +116,7 @@
                 android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:text="Total Infected"
-                android:textColor="#EF5350"
+                android:textColor="@color/red"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 

@@ -1,5 +1,5 @@
 
-package kushal.application.coronaupdates;
+package kushal.application.covaupdates;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

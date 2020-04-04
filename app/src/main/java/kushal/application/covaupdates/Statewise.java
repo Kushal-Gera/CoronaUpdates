@@ -1,5 +1,5 @@
 
-package kushal.application.coronaupdates;
+package kushal.application.covaupdates;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -24,6 +24,17 @@ public class Statewise {
     @SerializedName("state")
     @Expose
     private String state;
+    @SerializedName("delta")
+    @Expose
+    private Delta delta;
+
+    public Delta getDelta() {
+        return delta;
+    }
+
+    public void setDelta(Delta delta) {
+        this.delta = delta;
+    }
 
     public String getActive() {
         return active;

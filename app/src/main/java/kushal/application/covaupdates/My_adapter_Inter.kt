@@ -1,14 +1,17 @@
-package kushal.application.coronaupdates
+package kushal.application.covaupdates
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kushal.application.covaupdates.International.Country
+import java.util.*
 
-class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
+class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
     RecyclerView.Adapter<My_viewHolder>() {
 
     val backG: ArrayList<Int> = arrayListOf(
@@ -28,21 +31,24 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
 
-        holder.title.text = list[position].state.toString()
-        holder.firstLetter.text = list[position].state.toCharArray()[0].toString()
-        holder.totalInfected.text = list[position].confirmed.toString()
-        holder.date.text = list[position].lastupdatedtime.subSequence(0, 10).toString()
+        val date = Date()
+        val s = DateFormat.format("dd/MM/yyyy", date.time)
+
+        holder.title.text = list[position].country.toString().trim()
+        holder.firstLetter.text = list[position].country.toString().trim()
+        holder.totalInfected.text = list[position].totalConfirmed.toString()
+        holder.date.text = s.toString()
 
         holder.itemView.setOnClickListener {
             val text =
-                "Last Updated: ${list[position].lastupdatedtime.trim()}\n" +
-                        "Active:             ${list[position].active.trim()}\n" +
-                        "Confirmed:      ${list[position].confirmed.trim()}\n" +
-                        "Deaths:            ${list[position].deaths.trim()}\n" +
-                        "Recovered:      ${list[position].recovered.trim()}"
+                "Last Updated: ${s.toString()}\n" +
+                        "Active:             ${list[position].totalConfirmed - list[position].totalDeaths - list[position].totalRecovered}\n" +
+                        "Confirmed:      ${list[position].totalConfirmed.toString().trim()}\n" +
+                        "Deaths:            ${list[position].totalDeaths.toString().trim()}\n" +
+                        "Recovered:      ${list[position].totalRecovered.toString().trim()}"
 
             val d = AlertDialog.Builder(myContext, R.style.AlertDialogGreen)
-            d.setTitle(list[position].state.toString())
+            d.setTitle(list[position].country.toString())
             d.setMessage(text)
             d.setCancelable(false)
             d.setPositiveButton("Return") { dialogInterface: DialogInterface, i: Int ->
@@ -51,10 +57,10 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
             d.show()
 
         }
-
-
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun getItemCount(): Int {
+        return list.size
+    }
 
 }

@@ -1,4 +1,4 @@
-package kushal.application.coronaupdates;
+package kushal.application.covaupdates;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

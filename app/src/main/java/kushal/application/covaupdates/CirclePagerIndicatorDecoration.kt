@@ -1,4 +1,4 @@
-package kushal.application.coronaupdates
+package kushal.application.covaupdates
 
 import android.content.res.Resources
 import android.graphics.Canvas

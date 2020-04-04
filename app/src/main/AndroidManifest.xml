@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kushal.application.coronaupdates">
+    package="kushal.application.covaupdates">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
-        <activity android:name=".MainActivity">
+        <activity android:name="kushal.application.covaupdates.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package kushal.application.coronaupdates
+package kushal.application.covaupdates
 
 import android.app.AlertDialog
 import android.content.Context
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kushal.application.coronaupdates.International.ExampleInter
+import kushal.application.covaupdates.International.ExampleInter
 
 class MainActivity() : AppCompatActivity() {
 
@@ -73,24 +72,24 @@ class MainActivity() : AppCompatActivity() {
 
 
 //      ad stuff here
-        interstitialAd.adUnitId = INTERSTITIAL_ID
-        interstitialAd.loadAd(AdRequest.Builder().build())
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
-                val h = Handler()
-                h.postDelayed({
-                    interstitialAd.loadAd(
-                        AdRequest.Builder().build()
-                    )
-                }, 60 * 1000.toLong())
-            }
-
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                interstitialAd.show()
-            }
-        }
+//        interstitialAd.adUnitId = INTERSTITIAL_ID
+//        interstitialAd.loadAd(AdRequest.Builder().build())
+//        interstitialAd.adListener = object : AdListener() {
+//            override fun onAdClosed() {
+//                super.onAdClosed()
+//                val h = Handler()
+//                h.postDelayed({
+//                    interstitialAd.loadAd(
+//                        AdRequest.Builder().build()
+//                    )
+//                }, 60 * 1000.toLong())
+//            }
+//
+//            override fun onAdLoaded() {
+//                super.onAdLoaded()
+//                interstitialAd.show()
+//            }
+//        }
 
     }
 
@@ -199,7 +198,8 @@ class MainActivity() : AppCompatActivity() {
                 tv.text = "Know About India's Health ?"
                 loadData(url)
 
-            } else {
+            }
+            else {
                 item.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp)
                 tv.text = "Global Health ?"
                 loadDataInter(urlInter)

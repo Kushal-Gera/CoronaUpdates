@@ -14,4 +14,11 @@
     <color name="color4">#EC407A</color>
     <color name="color5">#5B6CBC</color>
 
+    <color name="red">#EF5350</color>
+    <color name="green">#00D09C</color>
+    <color name="orange">#F7A35C</color>
+    <color name="orange2">#f77b5c</color>
+    <color name="purple">#8085E9</color>
+    <color name="blue">#3EBDFF</color>
+
 </resources>

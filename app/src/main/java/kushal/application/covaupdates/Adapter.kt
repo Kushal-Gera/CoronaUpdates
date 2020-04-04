@@ -1,4 +1,4 @@
-package kushal.application.coronaupdates
+package kushal.application.covaupdates
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,7 +14,6 @@ class Adapter(val myContext: Context, val list: MutableList<Int>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         holder.home_image.setImageDrawable(myContext.resources.getDrawable(list[position]))
     }
 

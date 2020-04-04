@@ -1,5 +1,5 @@
 
-package kushal.application.coronaupdates.International;
+package kushal.application.covaupdates.International;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
