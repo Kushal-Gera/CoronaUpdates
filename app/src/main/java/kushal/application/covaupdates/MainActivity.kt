@@ -33,7 +33,10 @@ class MainActivity() : AppCompatActivity() {
     lateinit var que: RequestQueue
     val url = "https://api.covid19india.org/data.json"
     val urlInter = "https://api.covid19api.com/summary"
-    val INTERSTITIAL_ID = "ca-app-pub-5073642246912223/4646545920"
+    val INTERSTITIAL_ID =
+        "ca-app-pub-5073642246912223/8824671181"   // news hunter one
+    //        "ca-app-pub-5073642246912223/4646545920" // old one
+
     lateinit var coroutineContext: CoroutineScope
     var is_domestic = true
     val interstitialAd by lazy {
@@ -198,8 +201,7 @@ class MainActivity() : AppCompatActivity() {
                 tv.text = "Know About India's Health ?"
                 loadData(url)
 
-            }
-            else {
+            } else {
                 item.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp)
                 tv.text = "Global Health ?"
                 loadDataInter(urlInter)

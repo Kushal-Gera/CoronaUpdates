@@ -43,7 +43,6 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
         holder.totalInfected.text = list[position].totalConfirmed.toString()
         holder.date.text = s.toString()
 
-
         holder.itemView.setOnClickListener {
             val d = Dialog(myContext)
             val inc = list[position].newConfirmed.toString().trim()
@@ -60,8 +59,9 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
                     (list[position].totalConfirmed - list[position].totalDeaths - list[position].totalRecovered).toString()
                 it.dia_confirm.text = conf
                 it.dia_death.text = list[position].totalDeaths.toString()
-                it.dia_recovered.text = list[position].totalDeaths.toString()
-                it.dia_increase.text = "+$inc"
+                it.dia_recovered.text = list[position].totalRecovered.toString()
+                it.dia_increase.text = inc
+                it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
 
             }
 
@@ -76,8 +76,6 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
 
     }
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    override fun getItemCount(): Int = list.size
 
 }

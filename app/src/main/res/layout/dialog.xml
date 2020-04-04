@@ -75,9 +75,26 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
+                android:drawableEnd="@drawable/ic_arrow_upward_black_24dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="+213"
+                android:text="213"
+                android:textColor="@color/red"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dia_increase_percent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="20dp"
+                android:drawableEnd="@drawable/ic_arrow_upward_black_24dp"
+                android:fontFamily="sans-serif-medium"
+                android:maxLength="5"
+                android:text="2%"
                 android:textColor="@color/red"
                 android:textSize="24sp"
                 android:textStyle="bold" />

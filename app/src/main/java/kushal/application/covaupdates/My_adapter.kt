@@ -55,14 +55,16 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
                 it.dia_confirm.text = conf
                 it.dia_death.text = list[position].deaths.trim()
                 it.dia_recovered.text = list[position].recovered.trim()
-                it.dia_increase.text = "+$inc"
+                it.dia_increase.text = inc
+                it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
 
             }
 
             d.bar_before.post {
                 val h = d.bar_before.height
                 d.bar_before.animate()
-                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 10
+                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration =
+                    10
             }
 
         }

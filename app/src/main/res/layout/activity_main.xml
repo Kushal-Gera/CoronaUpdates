@@ -91,7 +91,7 @@
                     android:maxLines="1"
                     android:text="Region Name"
                     android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
