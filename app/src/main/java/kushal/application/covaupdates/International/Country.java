@@ -30,6 +30,17 @@ public class Country {
     @SerializedName("TotalRecovered")
     @Expose
     private Integer totalRecovered;
+    @SerializedName("Date")
+    @Expose
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getCountry() {
         return country;

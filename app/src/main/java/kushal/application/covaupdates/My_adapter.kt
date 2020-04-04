@@ -55,7 +55,7 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
                 it.dia_confirm.text = conf
                 it.dia_death.text = list[position].deaths.trim()
                 it.dia_recovered.text = list[position].recovered.trim()
-                it.dia_increase.text = inc
+                it.dia_increase.text = "+$inc"
                 it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
 
             }

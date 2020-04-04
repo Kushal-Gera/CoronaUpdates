@@ -25,23 +25,24 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
         R.drawable.bg5
     )
 
+    init {
+        list.sortByDescending { it.totalConfirmed }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): My_viewHolder {
         val view = LayoutInflater.from(myContext).inflate(R.layout.list, parent, false)
         return My_viewHolder(view)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
-
-        val date = Date()
-        val s = DateFormat.format("dd/MM/yyyy", date.time)
+        val s = list[position].date.toString().substring(0,10)
 
         holder.title.text = list[position].country.toString().trim()
         holder.firstLetter.text = list[position].country.toString().trim()
         holder.totalInfected.text = list[position].totalConfirmed.toString()
-        holder.date.text = s.toString()
+        holder.date.text = s
 
         holder.itemView.setOnClickListener {
             val d = Dialog(myContext)
@@ -54,13 +55,13 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
                 it.show()
 
                 it.dia_place.text = list[position].country.toString().trim()
-                it.dia_update.text = s.toString()
+                it.dia_update.text = s
                 it.dia_active.text =
                     (list[position].totalConfirmed - list[position].totalDeaths - list[position].totalRecovered).toString()
                 it.dia_confirm.text = conf
                 it.dia_death.text = list[position].totalDeaths.toString()
                 it.dia_recovered.text = list[position].totalRecovered.toString()
-                it.dia_increase.text = inc
+                it.dia_increase.text = "+$inc"
                 it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
 
             }
