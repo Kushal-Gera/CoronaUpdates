@@ -243,11 +243,11 @@
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="01-02-2020"
-            android:textColor="#3a4b5c"
-            android:textSize="20sp" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
