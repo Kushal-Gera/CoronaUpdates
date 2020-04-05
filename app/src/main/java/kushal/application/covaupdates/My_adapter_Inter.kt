@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -34,15 +33,16 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
         return My_viewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
-        val s = list[position].date.toString().substring(0,10)
+        val s = list[position].date.replace("T", " ").replace("Z", " ").trim()
 
         holder.title.text = list[position].country.toString().trim()
         holder.firstLetter.text = list[position].country.toString().trim()
         holder.totalInfected.text = list[position].totalConfirmed.toString()
-        holder.date.text = s
+        holder.date.text = s.subSequence(0, 10)
 
         holder.itemView.setOnClickListener {
             val d = Dialog(myContext)

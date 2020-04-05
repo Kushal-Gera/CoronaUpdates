@@ -24,16 +24,16 @@ public class Statewise {
     @SerializedName("state")
     @Expose
     private String state;
-    @SerializedName("delta")
+    @SerializedName("deltaconfirmed")
     @Expose
-    private Delta delta;
+    private String deltaconfirmed;
 
-    public Delta getDelta() {
-        return delta;
+    public String getDeltaconfirmed() {
+        return deltaconfirmed;
     }
 
-    public void setDelta(Delta delta) {
-        this.delta = delta;
+    public void setDeltaconfirmed(String deltaconfirmed) {
+        this.deltaconfirmed = deltaconfirmed;
     }
 
     public String getActive() {

@@ -30,8 +30,6 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
 
-        val delta = list[position].delta
-
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
 
         holder.title.text = list[position].state.toString().trim()
@@ -41,7 +39,7 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
 
         holder.itemView.setOnClickListener {
             val d = Dialog(myContext)
-            val inc = delta.confirmed.trim()
+            val inc = list[position].deltaconfirmed.toString().trim()
             val conf = list[position].confirmed.trim()
             d.let {
 
@@ -56,8 +54,9 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
                 it.dia_death.text = list[position].deaths.trim()
                 it.dia_recovered.text = list[position].recovered.trim()
                 it.dia_increase.text = "+$inc"
-                it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
-
+                it.dia_increase_percent.text =
+                    String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
+                it.dia_increase_percent.append("%")
             }
 
             d.bar_before.post {

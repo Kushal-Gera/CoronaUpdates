@@ -40,23 +40,42 @@
                 android:orientation="horizontal"
                 tools:ignore="UselessParent">
 
-                <View
+                <TextView
                     android:id="@+id/bar_before"
                     android:layout_width="20dp"
                     android:layout_height="200dp"
-                    android:layout_gravity="bottom"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@color/green" />
+                    android:background="@color/green"
+                    android:gravity="top|center_horizontal"
+                    android:text="Y"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    tools:ignore="SpUsage" />
 
-                <View
+                <TextView
                     android:id="@+id/bar_now"
                     android:layout_width="20dp"
                     android:layout_height="200dp"
-                    android:layout_gravity="bottom"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@color/green" />
+                    android:background="@color/green"
+                    android:gravity="top|center_horizontal"
+                    android:text="T"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    tools:ignore="SpUsage" />
+
+                <!--                <View-->
+                <!--                    android:id="@+id/bar_now"-->
+                <!--                    android:layout_width="20dp"-->
+                <!--                    android:layout_height="200dp"-->
+                <!--                    android:layout_gravity="bottom"-->
+                <!--                    android:layout_marginStart="20dp"-->
+                <!--                    android:layout_marginEnd="20dp"-->
+                <!--                    android:background="@color/green" />-->
 
             </LinearLayout>
 
@@ -89,7 +108,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="15dp"
                 android:drawableStart="@drawable/ic_arrow_upward_black_24dp"
                 android:fontFamily="sans-serif-medium"
                 android:maxLength="5"
