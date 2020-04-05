@@ -62,8 +62,9 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
                 it.dia_death.text = list[position].totalDeaths.toString()
                 it.dia_recovered.text = list[position].totalRecovered.toString()
                 it.dia_increase.text = "+$inc"
-                it.dia_increase_percent.text = "${inc.toInt() * 100 / conf.toInt()}%"
-
+                it.dia_increase_percent.text =
+                    String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
+                it.dia_increase_percent.append("%")
             }
 
             d.bar_before.post {
