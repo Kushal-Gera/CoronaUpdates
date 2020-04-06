@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <!--    //this is the secondary custom alert dialog theme-->
     <style name="AlertDialogGreen" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">#FF5252</item>

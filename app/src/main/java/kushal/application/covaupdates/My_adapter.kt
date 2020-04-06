@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog.*
 
-class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
+class My_adapter(val myContext: Context, var list: MutableList<Statewise>) :
     RecyclerView.Adapter<My_viewHolder>() {
 
     val backG: ArrayList<Int> = arrayListOf(
@@ -68,6 +68,11 @@ class My_adapter(val myContext: Context, val list: MutableList<Statewise>) :
 
         }
 
+    }
+
+    fun filter(l : MutableList<Statewise>){
+        list = l
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = list.size

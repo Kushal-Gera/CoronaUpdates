@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.dialog.*
 import kushal.application.covaupdates.International.Country
 import java.util.*
 
-class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
+class My_adapter_Inter(val myContext: Context, var list: MutableList<Country>) :
     RecyclerView.Adapter<My_viewHolder>() {
 
     val backG: ArrayList<Int> = arrayListOf(
@@ -76,6 +76,11 @@ class My_adapter_Inter(val myContext: Context, val list: MutableList<Country>) :
 
         }
 
+    }
+
+    fun filter(l : MutableList<Country>){
+        list = l
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = list.size

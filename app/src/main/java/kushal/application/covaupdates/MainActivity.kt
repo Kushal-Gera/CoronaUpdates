@@ -1,6 +1,8 @@
 package kushal.application.covaupdates
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.SearchManager
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ProgressBar
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +29,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kushal.application.covaupdates.International.Country
 import kushal.application.covaupdates.International.ExampleInter
+import java.util.*
 
 class MainActivity() : AppCompatActivity() {
 
@@ -39,9 +44,16 @@ class MainActivity() : AppCompatActivity() {
 
     lateinit var coroutineContext: CoroutineScope
     var is_domestic = true
+    var search_used = false
     val interstitialAd by lazy {
         InterstitialAd(this)
     }
+    lateinit var data_dom: MutableList<Statewise>
+    lateinit var data_glob: MutableList<Country>
+    var adapter_dom: My_adapter? = null
+    var adapter_glob: My_adapter_Inter? = null
+    lateinit var searchView : SearchView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,8 +119,10 @@ class MainActivity() : AppCompatActivity() {
 
                 val users = gson.fromJson(response, Example::class.java)
                 val list = users.statewise
+                data_dom = list
 
                 val adapter = My_adapter(this@MainActivity, list)
+                adapter_dom = adapter
 
                 recyclerView.visibility = RecyclerView.VISIBLE
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -143,7 +157,10 @@ class MainActivity() : AppCompatActivity() {
                 val users = gson.fromJson(response, ExampleInter::class.java)
                 val list = users.countries
                 list.removeAt(0)
+                data_glob = list
+
                 val adapter = My_adapter_Inter(this@MainActivity, list)
+                adapter_glob = adapter
 
                 recyclerView.visibility = RecyclerView.VISIBLE
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -170,9 +187,40 @@ class MainActivity() : AppCompatActivity() {
 
         menuInflater.inflate(R.menu.main_menu, menu)
 
-        return super.onCreateOptionsMenu(menu)
+        searchView = menu!!.findItem(R.id.app_bar_search).actionView as SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        searchView.queryHint = "Search By Name..."
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+        searchView.setOnCloseListener {
+            search_used = false
+            recView.visibility = RecyclerView.VISIBLE
+            searchView.onActionViewCollapsed()
+            return@setOnCloseListener true
+        }
+
+        searchView.setOnSearchClickListener {
+            search_used = true
+            recView.visibility = RecyclerView.GONE
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { filter(it) }
+                return true
+            }
+
+        })
+
+        return true
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.switchTab) {
 
@@ -214,10 +262,44 @@ class MainActivity() : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    fun filter(s: String) {
+        if (is_domestic) {
+            adapter_dom?.let {
+
+                val newList = mutableListOf<Statewise>()
+
+                for (state in data_dom) {
+                    if (state.state.toString().toLowerCase(Locale.getDefault()).contains(s))
+                        newList.add(state)
+                }
+
+                it.filter(newList)
+            }
+
+        } else {
+            adapter_glob?.let {
+
+                val newList = mutableListOf<Country>()
+
+                for (country in data_glob) {
+                    if (country.country.toString().toLowerCase(Locale.getDefault()).contains(s))
+                        newList.add(country)
+                }
+
+                it.filter(newList)
+            }
+        }
+    }
+
     override fun onBackPressed() {
         if (!is_domestic) {
-
             findViewById<TextView>(R.id.switchTab).performClick()
+            return
+        }
+        if (search_used){
+            recView.visibility = RecyclerView.VISIBLE
+            searchView.onActionViewCollapsed()
+            search_used = false
             return
         }
 
