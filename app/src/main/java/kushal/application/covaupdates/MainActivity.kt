@@ -292,14 +292,16 @@ class MainActivity() : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (!is_domestic) {
-            findViewById<TextView>(R.id.switchTab).performClick()
-            return
-        }
+
         if (search_used){
             recView.visibility = RecyclerView.VISIBLE
             searchView.onActionViewCollapsed()
             search_used = false
+            return
+        }
+
+        if (!is_domestic) {
+            findViewById<TextView>(R.id.switchTab).performClick()
             return
         }
 
