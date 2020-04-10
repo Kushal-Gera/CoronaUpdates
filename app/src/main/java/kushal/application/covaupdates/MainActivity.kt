@@ -6,7 +6,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
+import android.os.Vibrator
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ProgressBar
@@ -33,14 +33,12 @@ import kushal.application.covaupdates.International.Country
 import kushal.application.covaupdates.International.ExampleInter
 import java.util.*
 
+
 class MainActivity() : AppCompatActivity() {
 
     lateinit var que: RequestQueue
     val url = "https://api.covid19india.org/data.json"
     val urlInter = "https://api.covid19api.com/summary"
-    val INTERSTITIAL_ID =
-        "ca-app-pub-5073642246912223/8824671181"   // news hunter one
-    //        "ca-app-pub-5073642246912223/4646545920" // old one
 
     lateinit var coroutineContext: CoroutineScope
     var is_domestic = true
@@ -52,7 +50,10 @@ class MainActivity() : AppCompatActivity() {
     lateinit var data_glob: MutableList<Country>
     var adapter_dom: My_adapter? = null
     var adapter_glob: My_adapter_Inter? = null
-    lateinit var searchView : SearchView
+    lateinit var searchView: SearchView
+    val vib by lazy {
+        getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,28 +86,8 @@ class MainActivity() : AppCompatActivity() {
             d.show()
         }
 
-
-//      ad stuff here
-        interstitialAd.adUnitId = INTERSTITIAL_ID
-        interstitialAd.loadAd(AdRequest.Builder().build())
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdClosed() {
-                super.onAdClosed()
-                val h = Handler()
-                h.postDelayed({
-                    interstitialAd.loadAd(
-                        AdRequest.Builder().build()
-                    )
-                }, 60 * 1000.toLong())
-            }
-
-            override fun onAdLoaded() {
-                super.onAdLoaded()
-                interstitialAd.show()
-            }
-        }
-
     }
+
 
     private fun loadData(url: String) {
 
@@ -121,7 +102,7 @@ class MainActivity() : AppCompatActivity() {
                 val list = users.statewise
                 data_dom = list
 
-                val adapter = My_adapter(this@MainActivity, list)
+                val adapter = My_adapter(this@MainActivity, list, vib)
                 adapter_dom = adapter
 
                 recyclerView.visibility = RecyclerView.VISIBLE
@@ -222,23 +203,9 @@ class MainActivity() : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+
         if (item.itemId == R.id.switchTab) {
-
-            if (interstitialAd.isLoaded) {
-                interstitialAd.show()
-            } else {
-                interstitialAd.loadAd(AdRequest.Builder().build())
-                interstitialAd.adListener = object : AdListener() {
-                    override fun onAdClosed() {
-                        super.onAdClosed()
-                    }
-
-                    override fun onAdLoaded() {
-                        super.onAdLoaded()
-                        interstitialAd.show()
-                    }
-                }
-            }
 
             recyclerView.visibility = RecyclerView.GONE
             progressBar.visibility = ProgressBar.VISIBLE
@@ -267,7 +234,6 @@ class MainActivity() : AppCompatActivity() {
             adapter_dom?.let {
 
                 val newList = mutableListOf<Statewise>()
-
                 for (state in data_dom) {
                     if (state.state.toString().toLowerCase(Locale.getDefault()).contains(s))
                         newList.add(state)
@@ -293,7 +259,7 @@ class MainActivity() : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        if (search_used){
+        if (search_used) {
             recView.visibility = RecyclerView.VISIBLE
             searchView.onActionViewCollapsed()
             search_used = false

@@ -1,17 +1,19 @@
 package kushal.application.covaupdates
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog.*
 
-class My_adapter(val myContext: Context, var list: MutableList<Statewise>) :
+class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val vib: Vibrator) :
     RecyclerView.Adapter<My_viewHolder>() {
 
     val backG: ArrayList<Int> = arrayListOf(
@@ -23,6 +25,9 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>) :
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): My_viewHolder {
+        if (vib.hasVibrator())
+            vib.cancel()
+
         val view = LayoutInflater.from(myContext).inflate(R.layout.list, parent, false)
         return My_viewHolder(view)
     }
@@ -30,9 +35,24 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: My_viewHolder, position: Int) {
 
-        holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
-
         holder.title.text = list[position].state.toString().trim()
+        val total = list[position].confirmed.toString()
+
+        if (list[position].state.toString().trim().equals("Total", true)) {
+
+            val animator = ValueAnimator.ofInt(0, total.toInt())
+            animator.duration = 2500
+
+            animator.addUpdateListener {
+                holder.totalInfected.text = it.animatedValue.toString()
+                vib.vibrate(2)
+            }
+            animator.start()
+
+        } else
+            holder.totalInfected.text = total
+
+        holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
         holder.firstLetter.text = list[position].state.toCharArray()[0].toString()
         holder.totalInfected.text = list[position].confirmed.toString()
         holder.date.text = list[position].lastupdatedtime.subSequence(0, 10).toString()
@@ -62,15 +82,14 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>) :
             d.bar_before.post {
                 val h = d.bar_before.height
                 d.bar_before.animate()
-                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration =
-                    10
+                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
             }
 
         }
 
     }
 
-    fun filter(l : MutableList<Statewise>){
+    fun filter(l: MutableList<Statewise>) {
         list = l
         notifyDataSetChanged()
     }
