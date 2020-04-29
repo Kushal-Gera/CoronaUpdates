@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kushal.application.covaupdates.International.Country
 import kushal.application.covaupdates.International.ExampleInter
@@ -58,15 +59,16 @@ class MainActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         coroutineContext = CoroutineScope(Dispatchers.IO)
-        coroutineContext.launch {
+        coroutineContext.async(Dispatchers.Default) {
             sharedPref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
 
-            val normal = sharedPref.getBoolean("normal", true)
+            val normal = sharedPref.getBoolean("normal", false)
             if (!normal) {
                 startActivity(Intent(this@MainActivity, MaterialAct::class.java))
                 finish()
             }
-        }
+
+        }.onAwait
 
 
         setSupportActionBar(toolbar)
@@ -79,22 +81,6 @@ class MainActivity() : AppCompatActivity() {
 
         que = Volley.newRequestQueue(this)
         loadData(url)
-
-        val sh = getSharedPreferences("shared", Context.MODE_PRIVATE)
-        if (sh.getBoolean("isFirst", true)) {
-
-            val d = AlertDialog.Builder(this, R.style.AlertDialogGreen)
-            d.setTitle("Want Global Charts ?")
-            d.setMessage("To see global charts\nSelect the icon from the menu box.\nVice-Versa for National Charts\n")
-            d.setCancelable(true)
-            d.setPositiveButton("Understood") { dialogInterface: DialogInterface, i: Int ->
-                sh.edit().putBoolean("isFirst", false).apply()
-            }
-            d.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
-                dialogInterface.dismiss()
-            }
-            d.show()
-        }
 
     }
 

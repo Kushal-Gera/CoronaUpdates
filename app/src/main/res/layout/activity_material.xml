@@ -500,7 +500,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="00"
+                                android:text="000"
                                 android:textColor="@color/orange"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -538,7 +538,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="00"
+                                android:text="000"
                                 android:textColor="@color/red"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />

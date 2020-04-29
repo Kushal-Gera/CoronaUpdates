@@ -1,7 +1,9 @@
 package kushal.application.covaupdates
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -46,6 +48,24 @@ class MaterialAct : AppCompatActivity() {
         coroutineScope = CoroutineScope(Dispatchers.IO)
         window.statusBarColor = ContextCompat.getColor(this, R.color.purpleDark)
 
+
+        val shared_pref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
+
+        if (shared_pref.getBoolean("first_material", true)) {
+
+            val d = AlertDialog.Builder(this, R.style.AlertDialogBlue)
+            d.setTitle("Want Global Charts ?")
+            d.setMessage("For global charts\nSelect ' Blue Location Icon '\nVice-Versa for National Charts\n")
+            d.setCancelable(true)
+            d.setPositiveButton("Understood") { dialogInterface: DialogInterface, i: Int ->
+                shared_pref.edit().putBoolean("first_material", false).apply()
+            }
+            d.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
+                dialogInterface.dismiss()
+            }
+            d.show()
+
+        }
 
         loadData()
 
@@ -247,7 +267,6 @@ class MaterialAct : AppCompatActivity() {
             que.add(request)
 
         }
-
     }
 
     private fun loadData() {
@@ -288,10 +307,13 @@ class MaterialAct : AppCompatActivity() {
 
     fun transformInter(list: MutableList<Country>): ArrayList<SearchModel> {
         val newList = ArrayList<SearchModel>()
+        list.sortByDescending { it.totalConfirmed }
 
         for (item in list) {
             newList.add(SearchModel(item.country))
         }
+
+
 
         return newList
     }
@@ -309,7 +331,7 @@ class MaterialAct : AppCompatActivity() {
     override fun onBackPressed() {
         if (swiper.isRefreshing)
             swiper.isRefreshing = false
-        if (!inter)
+        if (inter)
             location_inter.performClick()
         else
             super.onBackPressed()
