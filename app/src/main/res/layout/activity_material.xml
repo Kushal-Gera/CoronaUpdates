@@ -99,6 +99,7 @@
                     android:paddingEnd="10dp">
 
                     <ImageView
+                        android:id="@+id/location_inter"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"

@@ -24,15 +24,21 @@ import kushal.application.covaupdates.International.ExampleInter
 class MaterialAct : AppCompatActivity() {
 
     lateinit var coroutineScope: CoroutineScope
-    val url = "https://api.covid19api.com/summary"
+    val urlInter = "https://api.covid19api.com/summary"
+    val url = "https://api.covid19india.org/data.json"
     val que by lazy {
         Volley.newRequestQueue(this)
     }
     var position: Int = -1
     var searchablelist: ArrayList<SearchModel>? = null
-    var dataList: MutableList<Country>? = null
-    var first = false
+    var dataListInter: MutableList<Country>? = null
+    var dataList: MutableList<Statewise>? = null
+    var inter = false
 
+    var first = false
+    var reloaded = false
+    var reloadedInter = false
+    var firstInter = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +50,10 @@ class MaterialAct : AppCompatActivity() {
         loadData()
 
         swiper.setOnRefreshListener {
-            loadData()
+            if (inter)
+                loadDataInter()
+            else
+                loadData()
             swiper.isRefreshing = false
         }
 
@@ -56,7 +65,11 @@ class MaterialAct : AppCompatActivity() {
             SimpleSearchDialogCompat(
                 this, "Search...", "Country Name...", null, searchablelist,
                 SearchResultListener { dialog, item, position ->
-                    setData(item.title)
+                    if (inter)
+                        setDataInter(item.title)
+                    else
+                        setData(item.title)
+
                     dialog.dismiss()
                 }).show()
 
@@ -75,7 +88,10 @@ class MaterialAct : AppCompatActivity() {
             mat_container.visibility = View.VISIBLE
             mat_appbarlayout.setExpanded(false)
 
-            update_chart()
+            if (inter)
+                update_chartInter()
+            else
+                update_chart()
         }
 
         mat_back.setOnClickListener {
@@ -85,13 +101,28 @@ class MaterialAct : AppCompatActivity() {
             finish()
         }
 
+        location_inter.setOnClickListener {
+
+            it.animate().rotationBy(3 * 360f).duration = 800
+
+            if (inter) {
+                reloaded = true
+                loadData()
+            } else {
+                reloadedInter = true
+                loadDataInter()
+            }
+
+            inter = !inter
+        }
+
     }
 
-    private fun update_chart() {
+    private fun update_chartInter() {
 
-        if (dataList == null || position == -1) return
+        if (dataListInter == null || position == -1) return
 
-        val item = dataList!![position]
+        val item = dataListInter!![position]
 
         val inc = item.newConfirmed.toString().trim()
         val conf = item.totalConfirmed.toString().trim()
@@ -112,16 +143,41 @@ class MaterialAct : AppCompatActivity() {
         }
     }
 
+    private fun update_chart() {
+
+        if (dataList == null || position == -1) return
+
+        val item = dataList!![position]
+
+        val inc = item.deltaconfirmed.toString().trim()
+        val conf = item.deltaconfirmed.toString().trim()
+        mat_dia_active.text =
+            (item.confirmed.toInt() - item.deaths.toInt() - item.recovered.toInt()).toString()
+        mat_dia_confirm.text = conf
+        mat_dia_death.text = item.deaths.toString()
+        mat_dia_recovered.text = item.recovered.toString()
+        mat_dia_increase.text = "+$inc"
+        mat_dia_increase_percent.text =
+            String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
+        mat_dia_increase_percent.append("%")
+
+        mat_bar_before.post {
+            val h = mat_bar_before.height
+            mat_bar_before.animate()
+                .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+        }
+    }
+
     @SuppressLint("SetTextI18n")
-    fun setData(mstring: String) {
+    fun setDataInter(mstring: String) {
 
         var pos = 0
-        for (i in dataList!!.indices) {
-            if (dataList!![i].country == mstring)
+        for (i in dataListInter!!.indices) {
+            if (dataListInter!![i].country == mstring)
                 pos = i
         }
         position = pos
-        val item = dataList!![pos]
+        val item = dataListInter!![pos]
 
         val date = item.date.replace("T", " ").replace("Z", " ").trim()
 
@@ -131,29 +187,53 @@ class MaterialAct : AppCompatActivity() {
         mat_infected.text = item.totalConfirmed.toString()
         mat_name.text = item.country.toString()
 
+        update_chartInter()
+
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun setData(mstring: String) {
+
+        var pos = 0
+        for (i in dataList!!.indices) {
+            if (dataList!![i].state == mstring)
+                pos = i
+        }
+        position = pos
+        val item = dataList!![pos]
+
+        val date = item.lastupdatedtime.trim()
+        mat_update.text = "Updated On $date"
+        mat_rec.text = item.recovered.toString()
+        mat_dead.text = item.deaths.toString()
+        mat_infected.text = item.confirmed.toString()
+        mat_name.text = item.state.toString()
+
         update_chart()
 
     }
 
-    private fun loadData() {
+    private fun loadDataInter() {
 
         swiper.isRefreshing = true
         coroutineScope.launch {
 
-            val request = StringRequest(url, Response.Listener { response ->
+            val request = StringRequest(urlInter, Response.Listener { response ->
 
                 val builder = GsonBuilder()
                 val gson = builder.create()
                 val users = gson.fromJson(response, ExampleInter::class.java)
                 val list = users.countries
                 list.removeAt(0)
+                inter = true
 
-                dataList = list
-                searchablelist = transform(list)
+                dataListInter = list
+                searchablelist = transformInter(list)
                 swiper.isRefreshing = false
-                if (!first)
-                    setData("India")
-                first = true
+                if (!firstInter or reloadedInter)
+                    setDataInter("United States of America")
+                firstInter = true
+                reloadedInter = false
 
             },
                 Response.ErrorListener {
@@ -170,7 +250,43 @@ class MaterialAct : AppCompatActivity() {
 
     }
 
-    fun transform(list: MutableList<Country>): ArrayList<SearchModel> {
+    private fun loadData() {
+
+        swiper.isRefreshing = true
+        coroutineScope.launch {
+
+            val request = StringRequest(url, Response.Listener { response ->
+
+                val builder = GsonBuilder()
+                val gson = builder.create()
+                val users = gson.fromJson(response, Example::class.java)
+                val list = users.statewise
+
+                inter = false
+                dataList = list
+                searchablelist = transform(list)
+                swiper.isRefreshing = false
+                if (!first or reloaded)
+                    setData("Total")
+                first = true
+                reloaded = false
+
+            },
+                Response.ErrorListener {
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@MaterialAct, "Data May Not be Available", Toast.LENGTH_LONG
+                        ).show()
+                    }
+                })
+
+            que.add(request)
+
+        }
+
+    }
+
+    fun transformInter(list: MutableList<Country>): ArrayList<SearchModel> {
         val newList = ArrayList<SearchModel>()
 
         for (item in list) {
@@ -180,9 +296,21 @@ class MaterialAct : AppCompatActivity() {
         return newList
     }
 
+    fun transform(list: MutableList<Statewise>): ArrayList<SearchModel> {
+        val newList = ArrayList<SearchModel>()
+
+        for (item in list) {
+            newList.add(SearchModel(item.state))
+        }
+
+        return newList
+    }
+
     override fun onBackPressed() {
         if (swiper.isRefreshing)
             swiper.isRefreshing = false
+        if (!inter)
+            location_inter.performClick()
         else
             super.onBackPressed()
     }

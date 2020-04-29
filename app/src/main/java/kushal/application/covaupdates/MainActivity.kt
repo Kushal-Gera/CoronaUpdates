@@ -6,6 +6,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Vibrator
 import android.view.Menu
@@ -50,19 +51,23 @@ class MainActivity() : AppCompatActivity() {
     val vib by lazy {
         getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
-    val sharedPref by lazy {
-        getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
-    }
+    lateinit var sharedPref: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         coroutineContext = CoroutineScope(Dispatchers.IO)
+        coroutineContext.launch {
+            sharedPref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
 
-        val normal = sharedPref.getBoolean("normal", true)
-        if (!normal)
-            startActivity(Intent(this, MaterialAct::class.java))
+            val normal = sharedPref.getBoolean("normal", true)
+            if (!normal) {
+                startActivity(Intent(this@MainActivity, MaterialAct::class.java))
+                finish()
+            }
+        }
+
 
         setSupportActionBar(toolbar)
 
@@ -229,6 +234,7 @@ class MainActivity() : AppCompatActivity() {
             is_domestic = !is_domestic
 
         } else if (item.itemId == R.id.material) {
+            sharedPref.edit().putBoolean("normal", false).apply()
             startActivity(Intent(this, MaterialAct::class.java))
             finish()
         }
