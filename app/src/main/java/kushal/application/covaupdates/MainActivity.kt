@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.os.Vibrator
 import android.view.Menu
@@ -21,9 +22,6 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -43,9 +41,7 @@ class MainActivity() : AppCompatActivity() {
     lateinit var coroutineContext: CoroutineScope
     var is_domestic = true
     var search_used = false
-    val interstitialAd by lazy {
-        InterstitialAd(this)
-    }
+
     lateinit var data_dom: MutableList<Statewise>
     lateinit var data_glob: MutableList<Country>
     var adapter_dom: My_adapter? = null
@@ -60,6 +56,10 @@ class MainActivity() : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         coroutineContext = CoroutineScope(Dispatchers.IO)
+
+
+        setSupportActionBar(toolbar)
+        startActivity(Intent(this, MaterialAct::class.java))
 
         val list = mutableListOf(R.drawable.prevention, R.drawable.symptoms)
         val adapter = Adapter(this, list)
@@ -87,7 +87,6 @@ class MainActivity() : AppCompatActivity() {
         }
 
     }
-
 
     private fun loadData(url: String) {
 
@@ -203,7 +202,6 @@ class MainActivity() : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
 
         if (item.itemId == R.id.switchTab) {
 

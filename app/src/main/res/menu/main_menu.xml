@@ -17,4 +17,21 @@
         android:title="@string/global"
         app:showAsAction="always" />
 
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/material"
+            android:icon="@drawable/material"
+            android:title="Material"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/natural"
+            android:checked="true"
+            android:icon="@drawable/natural"
+            android:title="natural"
+            app:showAsAction="never" />
+
+    </group>
+
 </menu>

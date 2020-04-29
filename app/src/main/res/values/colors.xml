@@ -20,5 +20,7 @@
     <color name="orange2">#f77b5c</color>
     <color name="purple">#8085E9</color>
     <color name="blue">#3EBDFF</color>
+    <color name="dark_blue">#1976D2</color>
+    <color name="purpleDark">#984289</color>
 
 </resources>

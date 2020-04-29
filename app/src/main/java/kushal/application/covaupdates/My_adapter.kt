@@ -9,9 +9,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
+import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog.*
+
 
 class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val vib: Vibrator) :
     RecyclerView.Adapter<My_viewHolder>() {
@@ -37,20 +40,7 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val v
 
         holder.title.text = list[position].state.toString().trim()
         val total = list[position].confirmed.toString()
-
-        if (list[position].state.toString().trim().equals("Total", true)) {
-
-            val animator = ValueAnimator.ofInt(0, total.toInt())
-            animator.duration = 2500
-
-            animator.addUpdateListener {
-                holder.totalInfected.text = it.animatedValue.toString()
-                vib.vibrate(2)
-            }
-            animator.start()
-
-        } else
-            holder.totalInfected.text = total
+        holder.totalInfected.text = total
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
         holder.firstLetter.text = list[position].state.toCharArray()[0].toString()
@@ -67,13 +57,26 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val v
                 it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 it.show()
 
+                if (list[position].state.toString().trim().equals("Total", true)) {
+
+                    val animator = ValueAnimator.ofInt(0, inc.toInt())
+                    animator.duration = 1500
+
+                    animator.addUpdateListener { it1 ->
+                        it.dia_increase.text = "+${it1.animatedValue}"
+                        vib.vibrate(2)
+                    }
+                    animator.start()
+
+                } else
+                    it.dia_increase.text = "+$inc"
+
                 it.dia_place.text = list[position].state.toString().trim()
                 it.dia_update.text = list[position].lastupdatedtime.trim()
                 it.dia_active.text = list[position].active.trim()
                 it.dia_confirm.text = conf
                 it.dia_death.text = list[position].deaths.trim()
                 it.dia_recovered.text = list[position].recovered.trim()
-                it.dia_increase.text = "+$inc"
                 it.dia_increase_percent.text =
                     String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
                 it.dia_increase_percent.append("%")
@@ -90,6 +93,7 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val v
     }
 
     fun filter(l: MutableList<Statewise>) {
+        vib.cancel()
         list = l
         notifyDataSetChanged()
     }

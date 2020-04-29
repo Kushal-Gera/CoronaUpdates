@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Corona Updates</string>
+    <string name="app_name">Covid Tracker</string>
     <string name="description">description</string>
     <string name="search">Search</string>
     <string name="global">Global</string>
+    <string name="case_update">Case Update</string>
+    <string name="more">More</string>
+    <string name="less">Less</string>
 </resources>
