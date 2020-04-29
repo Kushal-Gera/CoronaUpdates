@@ -50,6 +50,9 @@ class MainActivity() : AppCompatActivity() {
     val vib by lazy {
         getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
+    val sharedPref by lazy {
+        getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +60,11 @@ class MainActivity() : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         coroutineContext = CoroutineScope(Dispatchers.IO)
 
+        val normal = sharedPref.getBoolean("normal", true)
+        if (!normal)
+            startActivity(Intent(this, MaterialAct::class.java))
 
         setSupportActionBar(toolbar)
-        startActivity(Intent(this, MaterialAct::class.java))
 
         val list = mutableListOf(R.drawable.prevention, R.drawable.symptoms)
         val adapter = Adapter(this, list)
@@ -222,6 +227,10 @@ class MainActivity() : AppCompatActivity() {
             }
 
             is_domestic = !is_domestic
+
+        } else if (item.itemId == R.id.material) {
+            startActivity(Intent(this, MaterialAct::class.java))
+            finish()
         }
 
         return super.onOptionsItemSelected(item)

@@ -6,4 +6,7 @@
     <string name="case_update">Case Update</string>
     <string name="more">More</string>
     <string name="less">Less</string>
+    <string name="active_cases">Active Cases</string>
+    <string name="total_deaths">Total Deaths</string>
+    <string name="total_recovered">Total Recovered</string>
 </resources>

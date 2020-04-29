@@ -1,6 +1,8 @@
 package kushal.application.covaupdates
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -54,7 +56,6 @@ class MaterialAct : AppCompatActivity() {
             SimpleSearchDialogCompat(
                 this, "Search...", "Country Name...", null, searchablelist,
                 SearchResultListener { dialog, item, position ->
-//                    Toast.makeText(this, item.title, Toast.LENGTH_SHORT).show()
                     setData(item.title)
                     dialog.dismiss()
                 }).show()
@@ -74,30 +75,41 @@ class MaterialAct : AppCompatActivity() {
             mat_container.visibility = View.VISIBLE
             mat_appbarlayout.setExpanded(false)
 
-            if (dataList == null || position == -1) return@setOnClickListener
-
-            val item = dataList!![position]
-
-            val inc = item.newConfirmed.toString().trim()
-            val conf = item.totalConfirmed.toString().trim()
-            mat_dia_active.text =
-                (item.totalConfirmed - item.totalDeaths - item.totalRecovered).toString()
-            mat_dia_confirm.text = conf
-            mat_dia_death.text = item.totalDeaths.toString()
-            mat_dia_recovered.text = item.totalRecovered.toString()
-            mat_dia_increase.text = "+$inc"
-            mat_dia_increase_percent.text =
-                String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
-            mat_dia_increase_percent.append("%")
-
-            mat_bar_before.post {
-                val h = mat_bar_before.height
-                mat_bar_before.animate()
-                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
-            }
+            update_chart()
         }
 
+        mat_back.setOnClickListener {
+            val sharedPref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
+            sharedPref.edit().putBoolean("normal", true).apply()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
 
+    }
+
+    private fun update_chart() {
+
+        if (dataList == null || position == -1) return
+
+        val item = dataList!![position]
+
+        val inc = item.newConfirmed.toString().trim()
+        val conf = item.totalConfirmed.toString().trim()
+        mat_dia_active.text =
+            (item.totalConfirmed - item.totalDeaths - item.totalRecovered).toString()
+        mat_dia_confirm.text = conf
+        mat_dia_death.text = item.totalDeaths.toString()
+        mat_dia_recovered.text = item.totalRecovered.toString()
+        mat_dia_increase.text = "+$inc"
+        mat_dia_increase_percent.text =
+            String.format("%.1f", (inc.toFloat() * 100 / conf.toFloat()))
+        mat_dia_increase_percent.append("%")
+
+        mat_bar_before.post {
+            val h = mat_bar_before.height
+            mat_bar_before.animate()
+                .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -118,6 +130,8 @@ class MaterialAct : AppCompatActivity() {
         mat_dead.text = item.totalDeaths.toString()
         mat_infected.text = item.totalConfirmed.toString()
         mat_name.text = item.country.toString()
+
+        update_chart()
 
     }
 

@@ -35,6 +35,18 @@
                     android:src="@drawable/people"
                     tools:ignore="RtlSymmetry" />
 
+                <ImageView
+                    android:id="@+id/mat_back"
+                    android:layout_width="45dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:contentDescription="@string/description"
+                    android:rotation="-90"
+                    android:src="@drawable/back" />
+
                 <TextView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
@@ -43,6 +55,7 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-condensed"
                     android:gravity="center"
+                    android:letterSpacing="0.09"
                     android:maxLines="3"
                     android:text="We Commit To Lockdown"
                     android:textColor="@color/purpleDark"
@@ -59,12 +72,14 @@
         android:id="@+id/swiper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:overScrollMode="never">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,15 +111,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:layout_weight="10"
                         android:fontFamily="sans-serif-light"
                         android:gravity="start"
                         android:text="India"
                         android:textColor="@color/black"
                         android:textSize="22sp"
-                        android:textStyle="bold"
-                        tools:ignore="RtlSymmetry" />
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="35dp"
@@ -291,6 +305,9 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/dark_blue"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:letterSpacing="0.09"
@@ -306,6 +323,9 @@
                         android:layout_gravity="end"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
+                        android:drawableEnd="@drawable/ic_keyboard_arrow_up_black_24dp"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/dark_blue"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
                         android:letterSpacing="0.09"
@@ -329,8 +349,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:paddingBottom="20dp">
+                            android:paddingBottom="10dp">
 
                             <LinearLayout
                                 android:id="@+id/mat_bars"
@@ -347,7 +366,7 @@
                                     android:layout_height="200dp"
                                     android:layout_marginStart="20dp"
                                     android:layout_marginEnd="20dp"
-                                    android:background="@color/blue"
+                                    android:background="@color/green"
                                     android:gravity="top|center_horizontal"
                                     android:text="Y"
                                     android:textColor="@color/black"
@@ -361,7 +380,7 @@
                                     android:layout_height="200dp"
                                     android:layout_marginStart="20dp"
                                     android:layout_marginEnd="20dp"
-                                    android:background="@color/blue"
+                                    android:background="@color/green"
                                     android:gravity="top|center_horizontal"
                                     android:text="T"
                                     android:textColor="@color/black"
@@ -388,7 +407,7 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_marginEnd="20dp"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="+213"
+                                android:text="+000"
                                 android:textColor="@color/red"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
@@ -404,7 +423,7 @@
                                 android:drawableStart="@drawable/ic_arrow_upward_black_24dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:maxLength="5"
-                                android:text="2%"
+                                android:text="X%"
                                 android:textColor="@color/red"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
@@ -442,7 +461,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="2020"
+                                android:text="000"
                                 android:textColor="@color/purple"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -467,7 +486,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="2"
                                 android:gravity="start"
-                                android:text="Active Cases"
+                                android:text="@string/active_cases"
                                 android:textColor="@color/black"
                                 android:textSize="22sp" />
 
@@ -480,7 +499,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="30"
+                                android:text="00"
                                 android:textColor="@color/orange"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -505,7 +524,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="2"
                                 android:gravity="start"
-                                android:text="Total Deaths"
+                                android:text="@string/total_deaths"
                                 android:textColor="@color/black"
                                 android:textSize="22sp" />
 
@@ -518,7 +537,7 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="20"
+                                android:text="00"
                                 android:textColor="@color/red"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
@@ -544,7 +563,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="2"
                                 android:gravity="start"
-                                android:text="Total Recovered"
+                                android:text="@string/total_recovered"
                                 android:textColor="@color/black"
                                 android:textSize="22sp" />
 
@@ -557,8 +576,8 @@
                                 android:layout_weight="1"
                                 android:fontFamily="sans-serif-medium"
                                 android:gravity="center"
-                                android:text="2020"
-                                android:textColor="@color/dark_blue"
+                                android:text="000"
+                                android:textColor="@color/blue"
                                 android:textSize="22sp"
                                 android:textStyle="bold" />
 
