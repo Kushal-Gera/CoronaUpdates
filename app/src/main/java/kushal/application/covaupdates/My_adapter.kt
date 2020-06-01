@@ -9,9 +9,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.content.contentValuesOf
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog.*
 
@@ -41,6 +40,9 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val v
         holder.title.text = list[position].state.toString().trim()
         val total = list[position].confirmed.toString()
         holder.totalInfected.text = total
+
+        if (list[position].deltaconfirmed.toString().trim().toInt() == 0)
+            holder.updated.visibility = ImageView.INVISIBLE
 
         holder.firstLetter.background = ContextCompat.getDrawable(myContext, backG[position % 5])
         holder.firstLetter.text = list[position].state.toCharArray()[0].toString()

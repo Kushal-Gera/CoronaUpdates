@@ -1,9 +1,7 @@
 package kushal.application.covaupdates
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,6 +11,8 @@ import androidx.core.content.ContextCompat
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.gson.GsonBuilder
 import ir.mirrajabi.searchdialog.SimpleSearchDialogCompat
 import ir.mirrajabi.searchdialog.core.SearchResultListener
@@ -36,11 +36,13 @@ class MaterialAct : AppCompatActivity() {
     var dataListInter: MutableList<Country>? = null
     var dataList: MutableList<Statewise>? = null
     var inter = false
-
     var first = false
     var reloaded = false
     var reloadedInter = false
     var firstInter = false
+
+    var taptargetview = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,24 +52,40 @@ class MaterialAct : AppCompatActivity() {
 
 
         val shared_pref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
+        if (shared_pref.getBoolean("first_material_here", true)) {
+            taptargetview = true;
+            TapTargetSequence(this).targets(
+                TapTarget.forView(
+                    findViewById(R.id.mat_back),
+                    "Tap for going back to Normal Mode"
+                )
+                    .outerCircleAlpha(0.5f).outerCircleColor(R.color.purpleDark)
+                    .titleTextSize(28)
+                    .textColor(R.color.white).cancelable(false),
+                TapTarget.forView(
+                    findViewById(R.id.location_inter),
+                    "Switch between National and Global Charts !!"
+                )
+                    .outerCircleAlpha(0.5f).outerCircleColor(R.color.blue)
+                    .titleTextSize(28)
+                    .textColor(R.color.white).cancelable(false)
+            ).listener(object : TapTargetSequence.Listener {
+                override fun onSequenceCanceled(lastTarget: TapTarget?) {
+                }
 
-        if (shared_pref.getBoolean("first_material", true)) {
+                override fun onSequenceFinish() {
+                    shared_pref.edit().putBoolean("first_material_here", false).apply()
+                }
 
-            val d = AlertDialog.Builder(this, R.style.AlertDialogBlue)
-            d.setTitle("Want Global Charts ?")
-            d.setMessage("For global charts\nSelect ' Blue Location Icon '\nVice-Versa for National Charts\n")
-            d.setCancelable(true)
-            d.setPositiveButton("Understood") { dialogInterface: DialogInterface, i: Int ->
-                shared_pref.edit().putBoolean("first_material", false).apply()
-            }
-            d.setNegativeButton("Cancel") { dialogInterface: DialogInterface, i: Int ->
-                dialogInterface.dismiss()
-            }
-            d.show()
+                override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {
+                }
 
+            }).start()
         }
 
         loadData()
+
+        swiper.setColorSchemeColors(ContextCompat.getColor(this, R.color.purpleDark))
 
         swiper.setOnRefreshListener {
             if (inter)
@@ -83,7 +101,7 @@ class MaterialAct : AppCompatActivity() {
             }
 
             SimpleSearchDialogCompat(
-                this, "Search...", "Country Name...", null, searchablelist,
+                this, "Search...", "Type Name...", null, searchablelist,
                 SearchResultListener { dialog, item, position ->
                     if (inter)
                         setDataInter(item.title)
@@ -170,7 +188,7 @@ class MaterialAct : AppCompatActivity() {
         val item = dataList!![position]
 
         val inc = item.deltaconfirmed.toString().trim()
-        val conf = item.deltaconfirmed.toString().trim()
+        val conf = item.confirmed.toString().trim()
         mat_dia_active.text =
             (item.confirmed.toInt() - item.deaths.toInt() - item.recovered.toInt()).toString()
         mat_dia_confirm.text = conf
@@ -329,6 +347,8 @@ class MaterialAct : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if (taptargetview)
+            return
         if (swiper.isRefreshing)
             swiper.isRefreshing = false
         if (inter)

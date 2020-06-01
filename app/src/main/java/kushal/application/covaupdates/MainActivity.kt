@@ -1,10 +1,8 @@
 package kushal.application.covaupdates
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -49,10 +47,10 @@ class MainActivity() : AppCompatActivity() {
     var adapter_dom: My_adapter? = null
     var adapter_glob: My_adapter_Inter? = null
     lateinit var searchView: SearchView
+    lateinit var sharedPref: SharedPreferences
     val vib by lazy {
         getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     }
-    lateinit var sharedPref: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +65,6 @@ class MainActivity() : AppCompatActivity() {
                 startActivity(Intent(this@MainActivity, MaterialAct::class.java))
                 finish()
             }
-
         }.onAwait
 
 

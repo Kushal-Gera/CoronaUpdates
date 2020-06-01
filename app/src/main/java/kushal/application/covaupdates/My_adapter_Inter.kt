@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.dialog.*
@@ -44,6 +44,8 @@ class My_adapter_Inter(val myContext: Context, var list: MutableList<Country>) :
         holder.firstLetter.text = list[position].country.toString().trim()
         holder.totalInfected.text = list[position].totalConfirmed.toString()
         holder.date.text = s.subSequence(0, 10)
+        if (list[position].newConfirmed.toString().trim().toInt() == 0)
+            holder.updated.visibility = ImageView.INVISIBLE
 
         holder.itemView.setOnClickListener {
             val d = Dialog(myContext)

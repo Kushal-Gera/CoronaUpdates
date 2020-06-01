@@ -19,6 +19,7 @@
         <item name="android:background">@color/white</item>
     </style>
 
+
     <!--    //this is the secondary custom alert dialog theme-->
     <style name="AlertDialogBlue" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/dark_blue</item>

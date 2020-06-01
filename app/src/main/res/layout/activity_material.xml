@@ -198,7 +198,7 @@
                                 android:gravity="center"
                                 android:text="000"
                                 android:textColor="@color/orange"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -240,7 +240,7 @@
                                 android:gravity="center"
                                 android:text="000"
                                 android:textColor="@color/red"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -282,7 +282,7 @@
                                 android:gravity="center"
                                 android:text="000"
                                 android:textColor="@color/green"
-                                android:textSize="32sp"
+                                android:textSize="28sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -311,7 +311,6 @@
                         android:drawableTint="@color/dark_blue"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:letterSpacing="0.09"
                         android:text="@string/more"
                         android:textColor="@color/dark_blue"
                         android:textSize="22sp"
@@ -329,7 +328,6 @@
                         android:drawableTint="@color/dark_blue"
                         android:fontFamily="sans-serif-medium"
                         android:gravity="center"
-                        android:letterSpacing="0.09"
                         android:text="@string/less"
                         android:textColor="@color/dark_blue"
                         android:textSize="22sp"
@@ -343,9 +341,10 @@
                         android:layout_marginTop="30dp"
                         android:background="@drawable/white_radius"
                         android:gravity="center"
-                        android:orientation="vertical"
                         android:visibility="gone"
+                        android:orientation="vertical"
                         tools:ignore="UselessParent">
+
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -424,7 +423,7 @@
                                 android:drawableStart="@drawable/ic_arrow_upward_black_24dp"
                                 android:fontFamily="sans-serif-medium"
                                 android:maxLength="5"
-                                android:text="X%"
+                                android:text="0%"
                                 android:textColor="@color/red"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
