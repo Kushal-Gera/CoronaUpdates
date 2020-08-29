@@ -153,7 +153,6 @@ class MaterialAct : AppCompatActivity() {
 
             inter = !inter
         }
-
     }
 
     private fun update_chartInter() {

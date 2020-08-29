@@ -60,14 +60,14 @@ class MainActivity() : AppCompatActivity() {
         coroutineContext.async(Dispatchers.Default) {
             sharedPref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
 
-            val normal = sharedPref.getBoolean("normal", false)
+            val normal = sharedPref.getBoolean("normal", true)
             if (!normal) {
                 startActivity(Intent(this@MainActivity, MaterialAct::class.java))
                 finish()
             }
         }.onAwait
 
-
+    
         setSupportActionBar(toolbar)
 
         val list = mutableListOf(R.drawable.prevention, R.drawable.symptoms)
