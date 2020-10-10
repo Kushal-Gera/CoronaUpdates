@@ -1,7 +1,6 @@
 # Covid 19 Tracker  
 
-### Libraries Used for the Project
----  
+## Libraries Used for the Project
 
 * ##### com.android.volley:volley:1.x.x
 * ##### com.github.mirrajabi:search-dialog:1.x.x
@@ -9,10 +8,9 @@
 * ##### org.jetbrains.kotlinx:kotlinx-coroutines-android:1.x.x
 * ##### com.google.firebase:firebase-ads:19.x.x
 * ##### com.squareup.picasso:picasso:2.xxxx
----  
+---
 
-
-### Screenshots  
+## Screenshots  
 
 <img align="left" src="https://user-images.githubusercontent.com/53964520/95662439-99c64b80-0b54-11eb-84f3-6400f1d6076d.png" height="500" width="250"> 
 
