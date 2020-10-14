@@ -17,7 +17,7 @@ public class My_viewHolder extends RecyclerView.ViewHolder {
 
     My_viewHolder(@NonNull View itemView) {
         super(itemView);
-
+        
         title = itemView.findViewById(R.id.title);
         container = itemView.findViewById(R.id.container);
         firstLetter = itemView.findViewById(R.id.firstLetter);

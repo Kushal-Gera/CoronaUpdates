@@ -73,7 +73,8 @@ class My_adapter_Inter(val myContext: Context, var list: MutableList<Country>) :
             d.bar_before.post {
                 val h = d.bar_before.height
                 d.bar_before.animate()
-                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat()))
+                    .duration = 1
             }
 
         }

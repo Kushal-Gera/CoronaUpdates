@@ -174,9 +174,11 @@ class MaterialAct : AppCompatActivity() {
         mat_dia_increase_percent.append("%")
 
         mat_bar_before.post {
+            val FACTOR = conf.length * 2
             val h = mat_bar_before.height
             mat_bar_before.animate()
-                .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+                .translationY(inc.toFloat() * h * FACTOR / (inc.toFloat() + conf.toFloat()))
+                .duration = 1
         }
     }
 
@@ -199,9 +201,12 @@ class MaterialAct : AppCompatActivity() {
         mat_dia_increase_percent.append("%")
 
         mat_bar_before.post {
+            val FACTOR = conf.length * 2
             val h = mat_bar_before.height
             mat_bar_before.animate()
-                .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+                .translationY(inc.toFloat() * h * FACTOR / (inc.toFloat() + conf.toFloat()))
+                .duration =
+                1
         }
     }
 
@@ -329,8 +334,6 @@ class MaterialAct : AppCompatActivity() {
         for (item in list) {
             newList.add(SearchModel(item.country))
         }
-
-
 
         return newList
     }

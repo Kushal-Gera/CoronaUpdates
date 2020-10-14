@@ -87,7 +87,8 @@ class My_adapter(val myContext: Context, var list: MutableList<Statewise>, val v
             d.bar_before.post {
                 val h = d.bar_before.height
                 d.bar_before.animate()
-                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat())).duration = 1
+                    .translationY(inc.toFloat() * h / (inc.toFloat() + conf.toFloat()))
+                    .duration = 1000
             }
 
         }

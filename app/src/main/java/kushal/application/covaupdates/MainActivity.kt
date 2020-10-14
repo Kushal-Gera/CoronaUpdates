@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.GsonBuilder
@@ -32,7 +31,7 @@ import kushal.application.covaupdates.International.ExampleInter
 import java.util.*
 
 
-class MainActivity() : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit var que: RequestQueue
     val url = "https://api.covid19india.org/data.json"
@@ -60,14 +59,13 @@ class MainActivity() : AppCompatActivity() {
         coroutineContext.async(Dispatchers.Default) {
             sharedPref = getSharedPreferences("sharedpref", Context.MODE_PRIVATE)
 
-            val normal = sharedPref.getBoolean("normal", true)
+            val normal = sharedPref.getBoolean("normal", false)
             if (!normal) {
                 startActivity(Intent(this@MainActivity, MaterialAct::class.java))
                 finish()
             }
         }.onAwait
 
-    
         setSupportActionBar(toolbar)
 
         val list = mutableListOf(R.drawable.prevention, R.drawable.symptoms)
@@ -85,7 +83,7 @@ class MainActivity() : AppCompatActivity() {
 
         coroutineContext.launch(Dispatchers.Default) {
 
-            val request = StringRequest(url, Response.Listener { response ->
+            val request = StringRequest(url, { response ->
 
                 val builder = GsonBuilder()
                 val gson = builder.create()
@@ -102,7 +100,7 @@ class MainActivity() : AppCompatActivity() {
                 recyclerView.adapter = adapter
                 progressBar.visibility = ProgressBar.GONE
             },
-                Response.ErrorListener {
+                {
                     launch(Dispatchers.Main) {
                         Toast.makeText(
                             this@MainActivity,
@@ -122,7 +120,7 @@ class MainActivity() : AppCompatActivity() {
 
         coroutineContext.launch(Dispatchers.Default) {
 
-            val request = StringRequest(url, Response.Listener { response ->
+            val request = StringRequest(url, { response ->
 
                 val builder = GsonBuilder()
                 val gson = builder.create()
@@ -140,7 +138,7 @@ class MainActivity() : AppCompatActivity() {
                 recyclerView.adapter = adapter
                 progressBar.visibility = ProgressBar.GONE
             },
-                Response.ErrorListener {
+                {
                     launch(Dispatchers.Main) {
                         Toast.makeText(
                             this@MainActivity,
@@ -206,7 +204,6 @@ class MainActivity() : AppCompatActivity() {
                 Toast.makeText(this, "National Selected", Toast.LENGTH_LONG).show()
                 tv.text = "Know About India's Health ?"
                 loadData(url)
-
             } else {
                 item.icon = ContextCompat.getDrawable(this, R.drawable.ic_home_black_24dp)
                 tv.text = "Global Health ?"
