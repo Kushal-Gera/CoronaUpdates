@@ -1,17 +1,22 @@
 # Covid 19 Tracker  
+## Real-time Covid-19 Tracker Android App
+---
+<br/>
 
 ## Libraries Used for the Project
-
 * ##### com.android.volley:volley:1.x.x
 * ##### com.github.mirrajabi:search-dialog:1.x.x
 * ##### com.getkeepsafe.taptargetview:taptargetview:1.x.0
 * ##### org.jetbrains.kotlinx:kotlinx-coroutines-android:1.x.x
 * ##### com.google.firebase:firebase-ads:19.x.x
 * ##### com.squareup.picasso:picasso:2.xxxx
----
+<br/>
+
+## Download App
+#### https://drive.google.com/file/d/1GoAEk_UESFVI4Un_IU3fhUj73TlpfIAI/view?usp=drivesdk
+<br/>
 
 ## Screenshots  
-
 <img align="left"  src="https://user-images.githubusercontent.com/53964520/95663079-aef1a900-0b59-11eb-90fb-2520e7757faf.png" height="500" width="250">
 
 <img align="left" src="https://user-images.githubusercontent.com/53964520/95662441-9af77880-0b54-11eb-9f2f-e9937e356001.png" height="500" width="250">
