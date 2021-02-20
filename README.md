@@ -18,6 +18,7 @@
 
 ## Screenshots  
 <img align="left"  src="https://user-images.githubusercontent.com/53964520/95663079-aef1a900-0b59-11eb-90fb-2520e7757faf.png" height="500" width="250">
+<br/>
 
 <img align="left" src="https://user-images.githubusercontent.com/53964520/95662441-9af77880-0b54-11eb-9f2f-e9937e356001.png" height="500" width="250">
 
